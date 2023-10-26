@@ -1,5 +1,7 @@
+trigger:
+- master
 pool:
-  vmImage: 'ubuntu-16.04' # Hosted Ubuntu 1604
+  name: 'MyAgentPool' # Hosted Ubuntu 1604
   demands: maven
 
 steps:
