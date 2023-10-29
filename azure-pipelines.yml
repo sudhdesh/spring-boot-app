@@ -4,18 +4,11 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
 trigger:
-- master
+- '*'
 
 variables:
-
-  # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: '4b6918fc-13f1-4611-81ad-84f87c29a4ff'
-  
-  # Web app name
-  webAppName: 'java-spring-boot'
-
-  # Agent VM image name
-  name: 'MyAgentPool'
+  buildConfiguration: 'Release'
+  releaseBranchName: 'master'
 
 stages:
 - stage: Build
@@ -24,7 +17,7 @@ stages:
   - job: MavenPackageAndPublishArtifacts
     displayName: Maven Package and Publish Artifacts
     pool:
-      vmImage: $(vmImageName)
+      name: MyAgentPool
     
     steps:
     - task: Maven@3
@@ -53,7 +46,7 @@ stages:
     displayName: Deploy Linux Web App
     environment: 'development'
     pool: 
-      vmImage: $(vmImageName)
+      name: 'MyAgentPool'
     strategy:
       runOnce:
         deploy:
